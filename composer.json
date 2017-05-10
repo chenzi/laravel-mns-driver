@@ -1,0 +1,53 @@
+{
+  "name": "chenzi/laravel-mns-driver",
+  "type": "library",
+  "description": "Aliyun MNS Queue Driver For Laravel",
+  "keywords": [
+    "laravel",
+    "chenzi",
+    "aliyun",
+    "mns",
+    "ons",
+    "queue",
+    "driver",
+    "laravel-mns-driver"
+  ],
+  "homepage": "https://github.com/chenzi/laravel-mns-driver",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "chenzi",
+      "email": "wenj_2011@hotmail.com",
+      "homepage": "http://blog.chenzi.net",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "laravel/framework": "~5.1",
+    "php": "~5.5|~7.0",
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0||~5.0",
+    "scrutinizer/ocular": "~1.1",
+    "squizlabs/php_codesniffer": "~2.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Chenzi\\LaravelMNS\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Chenzi\\LaravelMNS\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "format": "phpcbf --standard=psr2 src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  }
+}
