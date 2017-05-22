@@ -9,7 +9,7 @@
 Via Composer
 
 ``` bash
-$ composer require chenzi/laravel-mns
+$ composer require chenzi/laravel-mns-driver
 ```
 
 ## Config
@@ -24,12 +24,22 @@ Edit your `config/queue.php`, add `mns` connection
 
 ```php
 'mns'        => [
-	'driver'       => 'mns',
-	'key'          => env('QUEUE_MNS_ACCESS_KEY'),
-	'secret'       => env('QUEUE_MNS_SECRET_KEY'),
-	'endpoint'     => env('QUEUE_MNS_ENDPOINT'),
-	'queue'        => env('QUEUE_NAME'),
-	'wait_seconds' => 30,
+    'sms'=> [
+        'driver'       => 'mns',
+        'key'          => env('QUEUE_MNS_ACCESS_KEY'),
+        'secret'       => env('QUEUE_MNS_SECRET_KEY'),
+        'endpoint'     => env('QUEUE_MNS_ENDPOINT'),
+        'queue'        => env('QUEUE_NAME'),
+        'wait_seconds' => 30,
+    ],
+    'email'=> [
+        'driver'       => 'mns',
+        'key'          => env('QUEUE_MNS_ACCESS_KEY'),
+        'secret'       => env('QUEUE_MNS_SECRET_KEY'),
+        'endpoint'     => env('QUEUE_MNS_ENDPOINT'),
+        'queue'        => env('QUEUE_NAME'),
+        'wait_seconds' => 30,
+    ]
 ]
 ```
 About [wait_seconds](https://help.aliyun.com/document_detail/35136.html)
@@ -129,17 +139,17 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/chenzi/laravel-mns.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/chenzi/laravel-mns-driver.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/chenzi/laravel-mns/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/chenzi/laravel-mns.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/chenzi/laravel-mns.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/chenzi/laravel-mns.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/chenzi/laravel-mns-driver/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/chenzi/laravel-mns-driver.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/chenzi/laravel-mns-driver.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/chenzi/laravel-mns-driver.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/chenzi/laravel-mns
-[link-travis]: https://travis-ci.org/chenzi/laravel-mns
-[link-scrutinizer]: https://scrutinizer-ci.com/g/chenzi/laravel-mns/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/chenzi/laravel-mns
-[link-downloads]: https://packagist.org/packages/chenzi/laravel-mns
+[link-packagist]: https://packagist.org/packages/chenzi/laravel-mns-driver
+[link-travis]: https://travis-ci.org/chenzi/laravel-mns-driver
+[link-scrutinizer]: https://scrutinizer-ci.com/g/chenzi/laravel-mns-driver/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/chenzi/laravel-mns-driver
+[link-downloads]: https://packagist.org/packages/chenzi/laravel-mns-driver
 [link-author]: https://github.com/chenzi
 [link-contributors]: ../../contributors
