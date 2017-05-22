@@ -2,7 +2,7 @@
 
 namespace Chenzi\LaravelMNS\Connectors;
 
-use Aliyun\MNS\Client;
+use AliyunMNS\Client;
 use Illuminate\Queue\Connectors\ConnectorInterface;
 use Chenzi\LaravelMNS\Adaptors\MNSAdapter;
 use Chenzi\LaravelMNS\MNSQueue;
