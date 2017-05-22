@@ -75,7 +75,7 @@ Queue::push(function($job){
 Create queue listener, run command in terminal
 
 ```bash
-$ php artisan queue:listen
+$ php artisan queue:mns:work sms
 ```
 ## Commands
 Flush MNS messages on Aliyun
