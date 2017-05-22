@@ -21,9 +21,7 @@ class LaravelMNSServiceProvider extends ServiceProvider {
 
 	public function boot() {
 		$this->MNSQueueManager = new MNSQueueManager( $this->app );
-
 		$this->registerConnector( $this->MNSQueueManager );
-
 		$this->commands( 'command.queue.mns.flush' );
 		$this->commands( 'command.queue.mns.work' );
 	}

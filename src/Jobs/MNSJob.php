@@ -3,6 +3,7 @@
 namespace Chenzi\LaravelMNS\Jobs;
 
 use AliyunMNS\Responses\ReceiveMessageResponse;
+use Chenzi\LaravelMNS\MNSQueue;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Queue\Job as JobContract;
 use Illuminate\Queue\Jobs\Job;
@@ -30,8 +31,6 @@ class MNSJob extends Job implements JobContract {
 	 */
 	private $adapter;
 
-	private $messageBody;
-
 	/**
 	 * Create a new job instance.
 	 *
@@ -39,14 +38,12 @@ class MNSJob extends Job implements JobContract {
 	 * @param MNSAdapter $mns
 	 * @param string $queue
 	 * @param \AliyunMNS\Responses\ReceiveMessageResponse $job
-	 * @param string $messageBody
 	 */
-	public function __construct( Container $container, MNSAdapter $mns, $queue, ReceiveMessageResponse $job, $messageBody ) {
-		$this->container   = $container;
-		$this->adapter     = $mns;
-		$this->queue       = $queue;
-		$this->job         = $job;
-		$this->messageBody = $messageBody;
+	public function __construct( Container $container, MNSAdapter $mns, $queue, ReceiveMessageResponse $job ) {
+		$this->container = $container;
+		$this->adapter   = $mns;
+		$this->queue     = $queue;
+		$this->job       = $job;
 	}
 
 	/**
@@ -55,10 +52,10 @@ class MNSJob extends Job implements JobContract {
 	public function fire() {
 		if ( method_exists( $this, 'resolveAndFire' ) ) {
 			$payload = json_decode( $this->getRawBody(), true );
-			if ( ! is_array( $payload) ) {
+			if ( ! is_array( $payload ) ) {
 				throw new \InvalidArgumentException( "Seems it's not a Laravel enqueued job. [$payload]" );
 			}
-			$this->resolveAndFire($payload);
+			$this->resolveAndFire( $payload );
 		} else {
 			parent::fire();
 		}
@@ -71,8 +68,14 @@ class MNSJob extends Job implements JobContract {
 	 */
 	public function getRawBody() {
 		return $this->messageBody;
+//		return json_encode([
+//			'displayName' => 'App\Jobs\CreateBbsAccount',//显示名称
+//			'job'         => 'App\Jobs\CreateBbsAccount@handle',//执行job名称
+//			'maxTries'    => null,//最大重试次数
+//			'timeout'     => null,//超时时间
+//			'data'        => [],//数据
+//		]);
 	}
-
 
 	/**
 	 * Delete the job from the queue.
@@ -99,7 +102,6 @@ class MNSJob extends Job implements JobContract {
 		$this->adapter->changeMessageVisibility( $this->job->getReceiptHandle(), $delay );
 	}
 
-
 	/**
 	 * Get the number of times the job has been attempted.
 	 *
@@ -109,7 +111,6 @@ class MNSJob extends Job implements JobContract {
 		return (int) $this->job->getDequeueCount();
 	}
 
-
 	/**
 	 * Get the IoC container instance.
 	 *
@@ -117,5 +118,14 @@ class MNSJob extends Job implements JobContract {
 	 */
 	public function getContainer() {
 		return $this->container;
+	}
+
+	public function resolveAndFire( $payload ) {
+		list($class, $method) = JobName::parse($payload['job']);
+		if($payload['job'] == 'Illuminate\Queue\CallQueuedHandler@call') {
+			parent::fire();
+		} else {
+			with($this->instance = (new $class()))->{$method}($this, $payload['data']);
+		}
 	}
 }

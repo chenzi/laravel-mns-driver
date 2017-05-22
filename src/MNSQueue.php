@@ -3,6 +3,7 @@
 namespace Chenzi\LaravelMNS;
 
 use AliyunMNS\Exception\MessageNotExistException;
+use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Requests\SendMessageRequest;
 use Chenzi\LaravelMNS\Jobs\MNSJob;
 use Exception;
@@ -121,14 +122,7 @@ class MNSQueue extends Queue implements QueueContract {
 		}
 
 		if ( $response ) {
-			$registerData                = [];
-			$registerData['messageId']   = $response->getMessageId();
-			$registerData['messageBody'] = $response->getMessageBody();
-			$job                         = 'App\Jobs\CreateBbsAccount';
-			$queue                       = 'mns';
-			$payload                     = $this->createPayload( new $job( $registerData ), null, $queue );
-
-			return new MNSJob( $this->container, $this->adapter, $queue, $response, $payload );
+			return new MNSJob( $this->container, $this->adapter, $queue, $response );
 		}
 
 		return null;

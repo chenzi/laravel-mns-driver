@@ -25,7 +25,7 @@ Edit your `config/queue.php`, add `mns` connection
 ```php
 'mns'        => [
     'sms'=> [
-        'driver'       => 'mns',
+        'driver'       => 'sms',
         'key'          => env('QUEUE_MNS_ACCESS_KEY'),
         'secret'       => env('QUEUE_MNS_SECRET_KEY'),
         'endpoint'     => env('QUEUE_MNS_ENDPOINT'),
@@ -33,7 +33,7 @@ Edit your `config/queue.php`, add `mns` connection
         'wait_seconds' => 30,
     ],
     'email'=> [
-        'driver'       => 'mns',
+        'driver'       => 'email',
         'key'          => env('QUEUE_MNS_ACCESS_KEY'),
         'secret'       => env('QUEUE_MNS_SECRET_KEY'),
         'endpoint'     => env('QUEUE_MNS_ENDPOINT'),
