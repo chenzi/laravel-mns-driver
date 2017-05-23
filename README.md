@@ -93,6 +93,23 @@ Flush MNS messages on Aliyun
 $ php artisan queue:mns:flush
 ```
 
+## Job handle
+```php
+class SendSms implements ShouldQueue
+{
+    ...
+    
+    public function handle(ReceiveMessageResponse $job){
+        $messageId = $job->getMessageId();
+        $messageBody = $job->getMessageBody();
+        
+        //TODO do some thing...
+    }
+    
+    ...
+}   
+```
+
 ## Security
 
 Create RAM access control at [Aliyun RAM Console](https://ram.console.aliyun.com)
