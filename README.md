@@ -71,8 +71,17 @@ Queue::push(function($job){
 	$job->delete();
 });
 ```
-
-Create queue listener, run command in terminal
+You also can custom request data format add mns queue with other program
+```php
+return json_encode( [
+    'displayName' => 'App\Jobs\SendSms',
+    'job'         => 'App\Jobs\SendSms',
+    'maxTries'    => null,
+    'timeout'     => null,
+    'data'        => [],
+] );
+```
+Create queue work, run command in terminal
 
 ```bash
 $ php artisan queue:mns:work sms

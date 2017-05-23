@@ -67,14 +67,7 @@ class MNSJob extends Job implements JobContract {
 	 * @return string
 	 */
 	public function getRawBody() {
-		return $this->messageBody;
-//		return json_encode([
-//			'displayName' => 'App\Jobs\CreateBbsAccount',//显示名称
-//			'job'         => 'App\Jobs\CreateBbsAccount@handle',//执行job名称
-//			'maxTries'    => null,//最大重试次数
-//			'timeout'     => null,//超时时间
-//			'data'        => [],//数据
-//		]);
+		return $this->job->getMessageBody();
 	}
 
 	/**
@@ -121,11 +114,8 @@ class MNSJob extends Job implements JobContract {
 	}
 
 	public function resolveAndFire( $payload ) {
-		list($class, $method) = JobName::parse($payload['job']);
-		if($payload['job'] == 'Illuminate\Queue\CallQueuedHandler@call') {
-			parent::fire();
-		} else {
-			with($this->instance = (new $class()))->{$method}($this, $payload['data']);
-		}
+		list( $class, $method ) = JobName::parse( $payload['job'] );
+		$method = $method != 'fire' ? $method : 'handle';
+		with( $this->instance = ( $this->resolve( $class ) ) )->{$method}( $this->job );
 	}
 }
